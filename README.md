@@ -1,2 +1,2 @@
-# ESTRUTURA-DE-DADOS-AULA1
+# ESTRUTURA-DE-DADOS1
 Estrutura de dados - Aula1
