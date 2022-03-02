@@ -1,22 +1,28 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 
+// Criando a struct da pilha
 struct Pilha {
-
-	int topo; /* posi��o elemento topo */
-	int capa;
-	float *pElem;
+	
+	// Declarando as variáveis
+	int topo; // Topo
+	int capacidade; // Capacidade
+	float *pElemento; // Ponteiro para elemento
 };
 
+// Função que cria a pilha
 void criarpilha( struct Pilha *p, int c ){
 
    p->topo = -1;
-   p->capa = c;
-   p->pElem = (float*) malloc (c * sizeof(float));
+   p->capacidade = c;
+   p->pElemento = (float*) malloc (c * sizeof(float));
 
 }
-int estavazia ( struct Pilha *p ){
+
+// Função que verifica se a pilha esta vazia
+int vazia ( struct Pilha *p ){
 
    if( p-> topo == -1 )
 
@@ -28,9 +34,10 @@ int estavazia ( struct Pilha *p ){
 
 }
 
-int estacheia ( struct Pilha *p ){
+// Função que verifica se a pilha esta cheia
+int cheia ( struct Pilha *p ){
 
-	if (p->topo == p->capa - 1)
+	if (p->topo == p->capacidade - 1)
 
 		return 1;
 
@@ -40,94 +47,105 @@ int estacheia ( struct Pilha *p ){
 
 }
 
+// Função que empilha
 void empilhar ( struct Pilha *p, float v){
 
 	p->topo++;
-	p->pElem [p->topo] = v;
+	p->pElemento [p->topo] = v;
 
 }
 
+// Função que desempilha
 float desempilhar ( struct Pilha *p ){
 
-   float aux = p->pElem [p->topo];
+   float aux = p->pElemento [p->topo];
    p->topo--;
    return aux;
 
 }
 
-float retornatopo ( struct Pilha *p ){
+// Função que mostra o topo
+float mostratopo ( struct Pilha *p ){
 
-   return p->pElem [p->topo];
+   return p->pElemento [p->topo];
 
 }
 
+// Função principal
 int main(){
 
+	setlocale(LC_ALL, "Portuguese");
+
+// Declarando as variáveis
 	struct Pilha minhapilha;
-	int capacidade, op;
+	int capacidade, opcao;
 	float valor;
 
-	printf( "\nCapacidade da pilha? " );
+	printf( "\nDigite a capacidade da pilha: " );
 	scanf( "%d", &capacidade );
 
 	criarpilha (&minhapilha, capacidade);
 
-	while( 1 ){ /* loop infinito */
+// Laço de repetição (loop) - While
+	while( 1 ){ 
+		
+		printf("\n------------------------\n");
+		printf("\n1- Empilhar\n");
+		printf("2- Desempilhar\n");
+		printf("3- Mostrar o topo\n");
+		printf("4- Sair\n");
+		printf("\nDigite a opção:  ");
+		scanf("%d", &opcao);
+		printf("\n------------------------");
 
-		printf("\n1- empilhar (push)\n");
-		printf("2- desempilhar (POP)\n");
-		printf("3- Mostrar o topo \n");
-		printf("4- sair\n");
-		printf("\nopcao? ");
-		scanf("%d", &op);
+// Estrutura condicional (switch, case)
+		switch (opcao){
 
-		switch (op){
+			case 1: // Empilhar
 
-			case 1: //push
+				if( cheia( &minhapilha ) == 1 )
 
-				if( estacheia( &minhapilha ) == 1 )
-
-					printf("\nPILHA CHEIA! \n");
+					printf("\nA pilha já está cheia \n");
 
 				else {
 
-					printf("\nVALOR? ");
+					printf("\nDigite o valor: ");
 					scanf("%f", &valor);
 					empilhar (&minhapilha, valor);
 
 				}
 				break;
 
-			case 2: //pop
-				if ( estavazia(&minhapilha) == 1 )
+			case 2: // Desemplihar
+				if ( vazia(&minhapilha) == 1 )
 
-					printf( "\nPILHA VAZIA! \n" );
+					printf( "\nA pilha está vazia \n" );
 
 				else{
 
 					valor = desempilhar (&minhapilha);
-					printf ( "\n%.1f DESEMPILHADO!\n", valor );
+					printf ( "\n%.1f Desempilhado\n", valor );
 
 				}
 				break;
 
-			case 3: // mostrar o topo
-				if ( estavazia (&minhapilha) == 1 )
+			case 3: // Topo
+				if ( vazia (&minhapilha) == 1 )
 
-					printf( "\nPILHA VAZIA!\n" );
+					printf( "\nA pilha está vazia\n" );
 
 				else {
 
-					valor = retornatopo (&minhapilha);
-					printf ( "\nTOPO: %.1f\n", valor );
+					valor = mostratopo (&minhapilha);
+					printf ( "\nTopo: %.1f\n", valor );
 
 				}
 				break;
 
-			case 4: 
+			case 4: // Sair
 				exit(0);
 
-			default: printf( "\nOPCAO INVALIDA! \n" );
+			default: printf( "\nOpção Inválida \n" );
 		}
 	}
 	
