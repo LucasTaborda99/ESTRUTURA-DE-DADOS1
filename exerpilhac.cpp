@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <locale.h>
 
-// Criando a struct da pilha
+// Criando a estrutura da pilha
 struct Pilha {
 	
 	// Declarando as variáveis
@@ -86,7 +86,7 @@ int main(){
 
 	criarpilha (&minhapilha, capacidade);
 
-// Laço de repetição (loop) - While
+// Laço de repetição (loop) - While para o menu
 	while( 1 ){ 
 		
 		printf("\n------------------------\n");
@@ -143,6 +143,7 @@ int main(){
 				break;
 
 			case 4: // Sair
+				printf("\nSaindo aqui, see you later ... ;) \n");
 				exit(0);
 
 			default: printf( "\nOpção Inválida \n" );
